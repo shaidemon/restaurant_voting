@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CaloriesManagementRestApplication {
+public class RestaurantVotingRestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CaloriesManagementRestApplication.class, args);
+        SpringApplication.run(RestaurantVotingRestApplication.class, args);
     }
 }
