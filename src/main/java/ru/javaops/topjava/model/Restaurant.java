@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import ru.javaops.topjava.util.validation.NoHtml;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "restaurant")
-public class Restaurant extends NamedEntity{
+public class Restaurant extends NamedEntity {
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -30,6 +30,6 @@ public class Restaurant extends NamedEntity{
 
     @Override
     public String toString() {
-        return "Restaurant:" + id + '['  + name + ']';
+        return "Restaurant:" + id + '[' + name + ']';
     }
 }

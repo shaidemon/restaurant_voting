@@ -19,9 +19,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public class Menu extends BaseEntity{
+public class Menu extends BaseEntity {
 
-    @Column(name = "date_menu", nullable = false,unique = true)
+    @Column(name = "date_menu", nullable = false, unique = true)
     private Date date_menu;
 
     @OneToMany(mappedBy = "menu")
@@ -35,6 +35,6 @@ public class Menu extends BaseEntity{
 
     @Override
     public String toString() {
-        return "Menu:" + id + '['  + date_menu + ']';
+        return "Menu:" + id + '[' + date_menu + ']';
     }
 }

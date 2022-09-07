@@ -1,4 +1,9 @@
 package ru.javaops.topjava.repository;
 
-public interface DishRepository {
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional(readOnly = true)
+public interface DishRepository extends BaseRepository{
+
+    
 }
