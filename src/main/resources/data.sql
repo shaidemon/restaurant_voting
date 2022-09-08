@@ -38,9 +38,9 @@ VALUES ( 'Beef Stroganoff', 28, 1, 1 ),
        ( 'Eggs Benedict', 20, 2, 1 ),
        ( 'Buttermilk pancake', 15, 2, 1 ),
        ( 'Smoothie', 7, 2, 1 ),
-       ( 'Chicken schnitzel', 22, 3,1 ),
-       ( 'Prague salad', 14, 3, 1 ),
-       ( 'San Pellegrino 750ml', 8, 3, 1 );
+       ( 'Chicken schnitzel', 22, 3,2 ),
+       ( 'Prague salad', 14, 3, 2 ),
+       ( 'San Pellegrino 750ml', 8, 3, 2 );
 
 INSERT INTO VOTE (DATE_VOTE, USER_ID, RESTAURANT_ID)
 VALUES ( CURRENT_DATE, 1, 1  ),

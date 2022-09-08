@@ -29,7 +29,7 @@ public class MenuCommonController {
     @Cacheable
     public List<Menu> getAll() {
         log.info("getAll");
-        return repository.findAll(Sort.by(Sort.Order.desc("date_menu")));
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")

@@ -11,7 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -22,13 +22,13 @@ import java.util.List;
 public class Menu extends BaseEntity {
 
     @Column(name = "date_menu", nullable = false, unique = true)
-    private Date date_menu;
+    private LocalDate date_menu;
 
     @OneToMany(mappedBy = "menu")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Dish> dishes;
 
-    public Menu(Integer id, Date date_menu) {
+    public Menu(Integer id, LocalDate date_menu) {
         super(id);
         this.date_menu = date_menu;
     }

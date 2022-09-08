@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "vote")
@@ -17,7 +16,7 @@ import java.time.LocalTime;
 public class Vote extends BaseEntity {
 
     @Column(name = "date_vote", nullable = false)
-    private Date date_vote;
+    private LocalDate date_vote;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,7 +27,7 @@ public class Vote extends BaseEntity {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    public Vote(Integer id, Date date_vote, Restaurant restaurant) {
+    public Vote(Integer id, LocalDate date_vote, Restaurant restaurant) {
         super(id);
         this.date_vote = date_vote;
         this.restaurant = restaurant;

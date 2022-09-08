@@ -37,7 +37,7 @@ public class VoteService {
 
     private Vote getVoteExist(int userId) {
         return repository.getAllByUser_Id(userId).stream()
-                .filter(v -> v.getDate_vote().toLocalDate().equals(LocalDate.now()))
+                .filter(v -> v.getDate_vote().equals(LocalDate.now()))
                 .findAny().orElse(null);
     }
 
