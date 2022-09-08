@@ -56,6 +56,7 @@ public class RestaurantController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody @Valid Restaurant restaurant, @PathVariable int id) {
         log.info("update {} with id {}", restaurant, id);
         assureIdConsistent(restaurant, id);

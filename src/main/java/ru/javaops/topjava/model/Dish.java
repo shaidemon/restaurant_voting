@@ -31,6 +31,8 @@ public class Dish extends NamedEntity {
     public Dish(Integer id, String name, Integer price) {
         super(id, name);
         this.price = price;
+//        this.restaurant = restaurant;
+//        this.menu = menu;
     }
 
     @Override
