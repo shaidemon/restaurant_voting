@@ -66,6 +66,7 @@ public class DishController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(allEntries = true)
     public void delete(@PathVariable int id) {
         log.info("delete id={}", id);
         repository.delete(id);
