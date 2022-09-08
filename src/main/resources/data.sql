@@ -42,6 +42,6 @@ VALUES ( 'Beef Stroganoff', 28, 1, 1 ),
        ( 'Prague salad', 14, 3, 2 ),
        ( 'San Pellegrino 750ml', 8, 3, 2 );
 
-INSERT INTO VOTE (DATE_VOTE, USER_ID, RESTAURANT_ID)
+INSERT INTO VOTE (DATE_VOTE, RESTAURANT_ID, USER_ID)
 VALUES ( CURRENT_DATE, 1, 1  ),
        (CURRENT_DATE, 2, 2)
