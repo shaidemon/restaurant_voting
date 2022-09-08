@@ -21,7 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-// TODO: cache only most requested data!
 @CacheConfig(cacheNames = "users")
 public class AdminUserController extends AbstractUserController {
 
@@ -33,9 +32,9 @@ public class AdminUserController extends AbstractUserController {
         return super.get(id);
     }
 
-    @GetMapping("/{id}/with-meals")
-    public ResponseEntity<User> getWithMeals(@PathVariable int id) {
-        return super.getWithMeals(id);
+    @GetMapping("/{id}/with-votes")
+    public ResponseEntity<User> getWithVotes(@PathVariable int id) {
+        return super.getWithVotes(id);
     }
 
     @Override

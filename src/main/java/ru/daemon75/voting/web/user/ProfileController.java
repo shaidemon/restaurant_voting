@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.daemon75.voting.model.User;
+import ru.daemon75.voting.to.UserTo;
 import ru.daemon75.voting.util.UserUtil;
 import ru.daemon75.voting.util.validation.ValidationUtil;
-import ru.daemon75.voting.to.UserTo;
 import ru.daemon75.voting.web.AuthUser;
 
 import javax.validation.Valid;
@@ -22,7 +22,6 @@ import java.net.URI;
 @RestController
 @RequestMapping(value = ProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-// TODO: cache only most requested data!
 @CacheConfig(cacheNames = "users")
 public class ProfileController extends AbstractUserController {
     static final String REST_URL = "/api/profile";
@@ -60,8 +59,8 @@ public class ProfileController extends AbstractUserController {
         prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }
 
-    @GetMapping("/with-meals")
-    public ResponseEntity<User> getWithMeals(@AuthenticationPrincipal AuthUser authUser) {
-        return super.getWithMeals(authUser.id());
+    @GetMapping("/with-votes")
+    public ResponseEntity<User> getWithVotes(@AuthenticationPrincipal AuthUser authUser) {
+        return super.getWithVotes(authUser.id());
     }
 }

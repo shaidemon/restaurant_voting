@@ -37,6 +37,6 @@ public class Dish extends NamedEntity {
 
     @Override
     public String toString() {
-        return "Dish:" + id + '[' + name + ", price=" + price + ",Menu date:" + getMenu().getDate_menu() + ']';
+        return "Dish:" + id + '[' + name + ", price=" + price + ']';
     }
 }
