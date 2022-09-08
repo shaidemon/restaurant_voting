@@ -2,7 +2,8 @@ package ru.javaops.topjava.web.menu;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import ru.javaops.topjava.model.Menu;
 import ru.javaops.topjava.repository.MenuRepository;
 
 import java.net.URI;
-import java.util.List;
 
 import static ru.javaops.topjava.util.validation.ValidationUtil.assureIdConsistent;
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkNew;
@@ -21,29 +21,13 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = MenuAdminController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
+@CacheConfig(cacheNames = "menu")
 public class MenuAdminController {
     static final String REST_URL = "/api/admin/menus";
     private final MenuRepository repository;
 
-//    @GetMapping()
-//    public List<Menu> getAll() {
-//        log.info("getAll");
-//        return repository.findAll(Sort.by(Sort.Order.desc("date_menu")));
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Menu> get(@PathVariable int id) {
-//        log.info("get {}", id);
-//        return ResponseEntity.of(repository.findById(id));
-//    }
-//
-//    @GetMapping("/{id}/with-dishes")
-//    public ResponseEntity<Menu> getWithDishes(@PathVariable int id) {
-//        log.info("getWithDishes {}", id);
-//        return ResponseEntity.of(repository.getWithDishes(id));
-//    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
     public ResponseEntity<Menu> createWithLocation(@RequestBody Menu menu) {
         log.info("create {}", menu);
         checkNew(menu);
@@ -55,6 +39,7 @@ public class MenuAdminController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
     public void update(@RequestBody Menu menu, @PathVariable int id) {
         log.info("update {} with id={}", menu, id);
         assureIdConsistent(menu, id);

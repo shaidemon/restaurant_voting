@@ -2,6 +2,9 @@ package ru.javaops.topjava.web.dish;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +24,14 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
+@CacheConfig(cacheNames = "dish")
 public class DishController {
 
     static final String REST_URL = "/api/admin/dishes";
     private final DishRepository repository;
 
     @GetMapping
+    @Cacheable
     public List<Dish> getAll() {
         log.info("getAll");
         return repository.findAll();
@@ -39,18 +44,20 @@ public class DishController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
     public ResponseEntity<Dish> create(@RequestBody @Valid Dish dish) {
         log.info("create {}", dish);
         checkNew(dish);
         Dish created = repository.save(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL+"{id}")
+                .path(REST_URL + "{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(allEntries = true)
     public void update(@RequestBody Dish dish, @PathVariable int id) {
         log.info("update {} with id={}", dish, id);
         assureIdConsistent(dish, id);
