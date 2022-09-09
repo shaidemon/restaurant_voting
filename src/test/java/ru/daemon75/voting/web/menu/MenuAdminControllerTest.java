@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.daemon75.voting.util.JsonUtil.writeValue;
+import static ru.daemon75.voting.web.menu.MenuTestData.*;
 import static ru.daemon75.voting.web.user.UserTestData.ADMIN_MAIL;
 
 class MenuAdminControllerTest extends AbstractControllerTest {
@@ -26,37 +27,37 @@ class MenuAdminControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        Menu newMenu = MenuTestData.getNew();
+        Menu newMenu = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(newMenu)))
                 .andExpect(status().isCreated());
-        Menu created = MenuTestData.MENU_MATCHER.readFromJson(action);
+        Menu created = MENU_MATCHER.readFromJson(action);
         int newId = created.id();
         newMenu.setId(newId);
-        MenuTestData.MENU_MATCHER.assertMatch(created, newMenu);
-        MenuTestData.MENU_MATCHER.assertMatch(menuRepository.getExisted(newId), newMenu);
+        MENU_MATCHER.assertMatch(created, newMenu);
+        MENU_MATCHER.assertMatch(menuRepository.getExisted(newId), newMenu);
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        Menu updated = MenuTestData.getUpdated();
+        Menu updated = getUpdated();
         updated.setId(null);
-        perform(MockMvcRequestBuilders.put(REST_URL+ MenuTestData.TOMORROW_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + TOMORROW_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        MenuTestData.MENU_MATCHER.assertMatch(menuRepository.getExisted(MenuTestData.TOMORROW_ID), MenuTestData.getUpdated());
+        MENU_MATCHER.assertMatch(menuRepository.getExisted(TOMORROW_ID), getUpdated());
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL+ MenuTestData.TOMORROW_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL + TOMORROW_ID))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertFalse(menuRepository.findById(MenuTestData.TOMORROW_ID).isPresent());
+        assertFalse(menuRepository.findById(TOMORROW_ID).isPresent());
     }
 }

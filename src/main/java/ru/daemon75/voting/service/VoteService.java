@@ -22,7 +22,7 @@ public class VoteService {
     @Transactional
     public Vote save(Vote vote, int userId) {
         vote.setUser(userRepository.getExisted(userId));
-        Vote voteExist = getVoteExist(userId);
+        Vote voteExist = getVoteExist(userId, vote.getDate_vote());
         if (isTimeForVote() && voteExist != null) {
             updateExist(vote, voteExist);
         }
@@ -35,9 +35,9 @@ public class VoteService {
         repository.save(voteExist);
     }
 
-    private Vote getVoteExist(int userId) {
+    private Vote getVoteExist(int userId, LocalDate dateVote) {
         return repository.getAllByUser_Id(userId).stream()
-                .filter(v -> v.getDate_vote().equals(LocalDate.now()))
+                .filter(v -> v.getDate_vote().equals(dateVote))
                 .findAny().orElse(null);
     }
 

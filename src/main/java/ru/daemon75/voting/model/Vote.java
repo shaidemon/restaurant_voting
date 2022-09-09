@@ -25,7 +25,7 @@ public class Vote extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    @JsonIgnore
+//    @JsonIgnore
     private Restaurant restaurant;
 
     public Vote(Integer id, LocalDate date_vote, Restaurant restaurant) {

@@ -8,10 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.daemon75.voting.model.Vote;
+import ru.daemon75.voting.repository.RestaurantRepository;
+import ru.daemon75.voting.repository.VoteRepository;
 import ru.daemon75.voting.service.VoteService;
 import ru.daemon75.voting.util.VoteUtil;
-import ru.daemon75.voting.model.Vote;
-import ru.daemon75.voting.repository.VoteRepository;
 import ru.daemon75.voting.web.AuthUser;
 
 import java.net.URI;
@@ -27,6 +28,7 @@ import static ru.daemon75.voting.util.validation.ValidationUtil.checkNew;
 public class VoteCommonController {
     static final String REST_URL = "/api/votes";
     private final VoteRepository repository;
+    private final RestaurantRepository restaurantRepository;
     private final VoteService service;
 
     @GetMapping
