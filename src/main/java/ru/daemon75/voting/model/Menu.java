@@ -1,5 +1,6 @@
 package ru.daemon75.voting.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Menu extends BaseEntity {
 
     @OneToMany(mappedBy = "menu")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Schema(hidden = true)
     private List<Dish> dishes;
 
     public Menu(Integer id, LocalDate date_menu) {

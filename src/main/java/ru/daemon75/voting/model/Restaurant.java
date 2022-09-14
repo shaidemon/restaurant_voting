@@ -1,5 +1,6 @@
 package ru.daemon75.voting.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,12 @@ public class Restaurant extends NamedEntity {
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Schema(hidden = true)
     private List<Dish> dishes;
 
     @OneToMany(mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Schema(hidden = true)
     private List<Vote> votes;
 
     public Restaurant(Integer id, String name) {

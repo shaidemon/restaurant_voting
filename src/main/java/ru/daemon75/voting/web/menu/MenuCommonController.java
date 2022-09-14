@@ -19,13 +19,13 @@ import java.util.List;
 @RequestMapping(value = MenuCommonController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
-@CacheConfig(cacheNames = "menu")
+//@CacheConfig(cacheNames = "menu")
 public class MenuCommonController {
     static final String REST_URL = "/api/menus";
     private final MenuRepository repository;
 
     @GetMapping()
-    @Cacheable
+//    @Cacheable
     public List<Menu> getAll() {
         log.info("getAll");
         return repository.findAll();
@@ -38,7 +38,7 @@ public class MenuCommonController {
     }
 
     @GetMapping("/{id}/with-dishes")
-    @Cacheable
+//    @Cacheable
     public ResponseEntity<Menu> getWithDishes(@PathVariable int id) {
         log.info("getWithDishes {}", id);
         return ResponseEntity.of(repository.getWithDishes(id));

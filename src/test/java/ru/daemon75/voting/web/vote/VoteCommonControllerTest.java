@@ -48,6 +48,7 @@ class VoteCommonControllerTest extends AbstractControllerTest {
         Vote created = VOTE_MATCHER.readFromJson(action);
         int newId = created.id();
         newVote.setId(newId);
+        newVote.setUser(user);
         VOTE_MATCHER.assertMatch(created, newVote);
         newVote.setUser(user);
         VOTE_MATCHER.assertMatch(repository.getExisted(newId), newVote);
@@ -64,14 +65,14 @@ class VoteCommonControllerTest extends AbstractControllerTest {
         Vote created = VOTE_MATCHER.readFromJson(action);
         int oldId = VOTE_ID_USER;
         newVote.setId(oldId);
+        created.setUser(user);
+        newVote.setUser(user);
         //Updating Vote or refuse - change CHECK_TIME in VoteUtil.class for various scenarios
         if (VoteUtil.isTimeForVote()) {
             VOTE_MATCHER.assertMatch(created, newVote);
-            newVote.setUser(user);
             VOTE_MATCHER.assertMatch(repository.getExisted(oldId), newVote);
         } else {
             VOTE_MATCHER.assertMatch(created, vote_user_astoria);
-            vote_user_astoria.setUser(user);
             VOTE_MATCHER.assertMatch(repository.getExisted(oldId), vote_user_astoria);
         }
     }

@@ -10,8 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.daemon75.voting.web.vote.VoteTestData.vote_admin_seasons;
-import static ru.daemon75.voting.web.vote.VoteTestData.vote_user_astoria;
+import static ru.daemon75.voting.web.vote.VoteTestData.*;
 
 public class UserTestData {
     public static final MatcherFactory.Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "votes", "password");
@@ -37,7 +36,7 @@ public class UserTestData {
     public static final User guest = new User(GUEST_ID, "Guest", GUEST_MAIL, "guest");
 
     static {
-        user.setVotes(List.of(vote_user_astoria));
+        user.setVotes(List.of(vote1_user_prague, vote_user_astoria));
         admin.setVotes(List.of(vote_admin_seasons));
     }
 
