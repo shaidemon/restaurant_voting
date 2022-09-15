@@ -16,6 +16,8 @@ import ru.daemon75.voting.service.MenuService;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.daemon75.voting.util.Util.TODAY;
+
 @RestController
 @RequestMapping(value = MenuCommonController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
@@ -27,9 +29,9 @@ public class MenuCommonController {
     private final MenuService service;
 
     @GetMapping()
-    public List<Menu> getAll() {
-        log.info("getAll");
-        return repository.findAll();
+    public List<Menu> getTodayMenus() {
+        log.info("get today menus");
+        return repository.getToday(TODAY);
     }
 
     @GetMapping("/{id}")

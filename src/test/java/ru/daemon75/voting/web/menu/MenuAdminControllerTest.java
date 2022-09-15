@@ -12,10 +12,12 @@ import ru.daemon75.voting.web.AbstractControllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.daemon75.voting.util.JsonUtil.writeValue;
 import static ru.daemon75.voting.web.menu.MenuTestData.*;
 import static ru.daemon75.voting.web.user.UserTestData.ADMIN_MAIL;
+import static ru.daemon75.voting.web.user.UserTestData.USER_MAIL;
 
 class MenuAdminControllerTest extends AbstractControllerTest {
 
@@ -23,6 +25,16 @@ class MenuAdminControllerTest extends AbstractControllerTest {
 
     @Autowired
     private MenuRepository menuRepository;
+
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void getAll() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MENU_MATCHER.contentJson(menuYesterday, menuToday1, menuToday2));
+    }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)

@@ -21,12 +21,12 @@ class MenuCommonControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = USER_MAIL)
-    void getAll() throws Exception {
+    void getTodayMenus() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_MATCHER.contentJson(menuYesterday, menuToday1, menuToday2));
+                .andExpect(MENU_MATCHER.contentJson(menuToday1, menuToday2));
     }
 
     @Test
