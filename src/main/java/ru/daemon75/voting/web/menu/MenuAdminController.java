@@ -22,7 +22,7 @@ import static ru.daemon75.voting.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = MenuAdminController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
-//@CacheConfig(cacheNames = "menu")
+@CacheConfig(cacheNames = "menus")
 public class MenuAdminController {
     static final String REST_URL = "/api/admin/menus";
     private final MenuRepository repository;
@@ -34,7 +34,7 @@ public class MenuAdminController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @CacheEvict(allEntries = true)
+    @CacheEvict(allEntries = true)
     public ResponseEntity<Menu> createWithLocation(@RequestBody Menu menu) {
         log.info("create {}", menu);
         checkNew(menu);
@@ -46,7 +46,7 @@ public class MenuAdminController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @CacheEvict(allEntries = true)
+    @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Menu menu, @PathVariable int id) {
         log.info("update {} with id={}", menu, id);
@@ -56,7 +56,7 @@ public class MenuAdminController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @CacheEvict(allEntries = true)
+    @CacheEvict(allEntries = true)
     public void delete(@PathVariable int id) {
         log.info("delete {}", id);
         repository.deleteExisted(id);

@@ -2,6 +2,8 @@ package ru.daemon75.voting.web.menu;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ import static ru.daemon75.voting.util.Util.TODAY;
 @RequestMapping(value = MenuCommonController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
-//@CacheConfig(cacheNames = "menu")
+@CacheConfig(cacheNames = "menus")
 public class MenuCommonController {
     static final String REST_URL = "/api/menus";
     private final MenuRepository repository;
@@ -41,9 +43,9 @@ public class MenuCommonController {
     }
 
     @GetMapping("/{id}/items")
-//    @Cacheable
+    @Cacheable
     public ResponseEntity<List<MenuItem>> getItems(@PathVariable int id) {
-        log.info("getWithDishes {}", id);
+        log.info("getItems {}", id);
         return ResponseEntity.of(Optional.ofNullable(service.getItems(id)));
     }
 }
