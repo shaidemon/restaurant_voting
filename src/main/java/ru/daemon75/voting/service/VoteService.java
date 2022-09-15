@@ -21,7 +21,7 @@ public class VoteService {
     public Vote save(Vote vote, int userId) {
         vote.setUser(userRepository.getReferenceById(userId));
         Vote voteExist = repository.getExistToday(userId, TODAY);
-        return voteExist == null ? repository.save(vote) : null;
+        return voteExist == null ? repository.save(vote) : update(vote, voteExist.id(), userId);
     }
 
     public Vote update(Vote vote, int id, int userId) {

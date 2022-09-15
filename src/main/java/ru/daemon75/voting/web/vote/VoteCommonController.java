@@ -41,6 +41,7 @@ public class VoteCommonController {
         log.info("create {} with user id={}", vote, userId);
         checkNew(vote);
         Vote counted = service.save(vote, userId);
+        log.info("counted={}", counted);
         if (counted != null) {
             URI uriOfResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path(REST_URL + "/{id}")
