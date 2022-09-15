@@ -23,15 +23,16 @@ public class Vote extends BaseEntity {
     @JsonIgnore
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
-//    @JsonIgnore
-    private Restaurant restaurant;
+//    @ManyToOne
+//    @JoinColumn(name = "restaurant_id")
+////    @JsonIgnore
+//    private Restaurant restaurant;
+    private int restaurantId;
 
-    public Vote(Integer id, LocalDate date_vote, Restaurant restaurant) {
+    public Vote(Integer id, LocalDate date_vote, int restaurantId) {
         super(id);
         this.date_vote = date_vote;
-        this.restaurant = restaurant;
+        this.restaurantId = restaurantId;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Vote extends BaseEntity {
         return "Vote{" +
                 "Date:" + date_vote +
                 ", user=" + user +
-                ", restaurant=" + restaurant +
+                ", restaurantId=" + restaurantId +
                 '}';
     }
 }

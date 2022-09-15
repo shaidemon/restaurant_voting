@@ -69,11 +69,11 @@ class RestaurantControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void getWithDishes() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + SEASONS_ID + "/with-dishes"))
+        perform(MockMvcRequestBuilders.get(REST_URL + SEASONS_ID + "/with-items"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_WITH_DISHES_MATCHER.contentJson(seasons));
+                .andExpect(RESTAURANT_WITH_ITEMS_MATCHER.contentJson(seasons));
     }
 
     @Test

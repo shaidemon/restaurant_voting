@@ -29,7 +29,7 @@ public class Restaurant extends NamedEntity {
     @OneToMany(mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Schema(hidden = true)
-    private List<Vote> votes;
+    private List<Menu> menus;
 
     public Restaurant(Integer id, String name) {
         super(id, name);

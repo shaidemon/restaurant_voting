@@ -8,8 +8,7 @@ import ru.daemon75.voting.model.Vote;
 import ru.daemon75.voting.repository.UserRepository;
 import ru.daemon75.voting.repository.VoteRepository;
 
-import java.time.LocalDate;
-
+import static ru.daemon75.voting.util.Util.TODAY;
 import static ru.daemon75.voting.util.VoteUtil.isTimeForVote;
 
 @Service
@@ -22,24 +21,27 @@ public class VoteService {
     @Transactional
     public Vote save(Vote vote, int userId) {
         vote.setUser(userRepository.getReferenceById(userId));
-        Vote voteExist = getVoteExist(userId, vote.getDate_vote());
-        if (isTimeForVote() && voteExist != null) {
-            updateExist(vote, voteExist);
-        }
-        return voteExist == null ? repository.save(vote) : voteExist;
+        Vote voteExist = repository.getExistToday(userId, TODAY);
+        return voteExist == null ? repository.save(vote) : null;
     }
 
-    private void updateExist(Vote vote, Vote voteExist) {
-        log.info("change voting, vote with id={}", voteExist.id());
-        voteExist.setRestaurant(vote.getRestaurant());
-        repository.save(voteExist);
+    public Vote update(Vote vote) {
+        if (isTimeForVote())
+            return repository.save(vote);
+        return null;
     }
 
-    private Vote getVoteExist(int userId, LocalDate dateVote) {
-        return repository.getAllByUser_Id(userId).stream()
-                .filter(v -> v.getDate_vote().equals(dateVote))
-                .findAny().orElse(null);
-    }
+//    private void updateExist(Vote vote, Vote voteExist) {
+//        log.info("change voting, vote with id={}", vote.id());
+//        voteExist.setRestaurantId(vote.getRestaurantId());
+//        repository.save(voteExist);
+//    }
+
+//    private Vote getVoteExist(int userId, LocalDate dateVote) {
+//        return repository.getAllByUser_Id(userId).stream()
+//                .filter(v -> v.getDate_vote().equals(dateVote))
+//                .findAny().orElse(null);
+//    }
 
 
 }

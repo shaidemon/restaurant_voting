@@ -10,7 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.daemon75.voting.web.vote.VoteTestData.*;
+import static ru.daemon75.voting.web.vote.VoteTestData.vote1_user_astoria;
+import static ru.daemon75.voting.web.vote.VoteTestData.vote_user_astoria;
 
 public class UserTestData {
     public static final MatcherFactory.Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "votes", "password");
@@ -18,7 +19,7 @@ public class UserTestData {
             MatcherFactory.usingAssertions(User.class,
                     //     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes
                     (a, e) -> assertThat(a).usingRecursiveComparison()
-                            .ignoringFields("registered", "votes.user","votes.restaurant",  "password").isEqualTo(e),
+                            .ignoringFields("registered", "votes", "votes.restaurant", "password").isEqualTo(e),
                     (a, e) -> {
                         throw new UnsupportedOperationException();
                     });
@@ -31,17 +32,17 @@ public class UserTestData {
     public static final String ADMIN_MAIL = "admin@gmail.com";
     public static final String GUEST_MAIL = "guest@gmail.com";
 
-    public static final User user = new User(USER_ID, "User", USER_MAIL, "password",  Role.USER);
+    public static final User user = new User(USER_ID, "User", USER_MAIL, "password", Role.USER);
     public static final User admin = new User(ADMIN_ID, "Admin", ADMIN_MAIL, "admin", Role.ADMIN, Role.USER);
     public static final User guest = new User(GUEST_ID, "Guest", GUEST_MAIL, "guest");
 
     static {
-        user.setVotes(List.of(vote1_user_prague, vote_user_astoria));
-        admin.setVotes(List.of(vote_admin_seasons));
+        user.setVotes(List.of(vote1_user_astoria, vote_user_astoria));
+//        admin.setVotes(List.of(vote_admin_seasons));
     }
 
     public static User getNew() {
-        return new User(null, "New", "new@gmail.com", "newPass",  false, new Date(), Collections.singleton(Role.USER));
+        return new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.USER));
     }
 
     public static User getUpdated() {

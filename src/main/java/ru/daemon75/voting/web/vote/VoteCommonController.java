@@ -11,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.daemon75.voting.model.Vote;
 import ru.daemon75.voting.repository.VoteRepository;
 import ru.daemon75.voting.service.VoteService;
-import ru.daemon75.voting.util.VoteUtil;
 import ru.daemon75.voting.web.AuthUser;
 
 import java.net.URI;
@@ -42,10 +41,13 @@ public class VoteCommonController {
         log.info("create {} with user id={}", vote, userId);
         checkNew(vote);
         Vote counted = service.save(vote, userId);
-        URI uriOfResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(counted.getId()).toUri();
-        return ResponseEntity.created(uriOfResource).body(counted);
+        if (counted != null) {
+            URI uriOfResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(REST_URL + "/{id}")
+                    .buildAndExpand(counted.getId()).toUri();
+            return ResponseEntity.created(uriOfResource).body(counted);
+        }
+        return ResponseEntity.unprocessableEntity().body(null);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,19 +56,21 @@ public class VoteCommonController {
         log.info("update {} for user id={}", vote, userId);
         assureIdConsistent(vote, id);
         repository.checkBelong(id, userId);
-        if (VoteUtil.isTimeForVote()) {
-            repository.save(vote);
-            return ResponseEntity.ok().build();
-        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//        if (VoteUtil.isTimeForVote()) {
+//            repository.save(vote);
+//            return ResponseEntity.ok().build();
+//        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return service.update(vote) != null ? ResponseEntity.ok().build()
+                : ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
-        int userId = authUser.id();
-        log.info("delete id={} for user id={}", id, userId);
-        Vote vote = repository.checkBelong(id, userId);
-        repository.delete(vote);
-    }
+//    @DeleteMapping("{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delete(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
+//        int userId = authUser.id();
+//        log.info("delete id={} for user id={}", id, userId);
+//        Vote vote = repository.checkBelong(id, userId);
+//        repository.delete(vote);
+//    }
 
 }

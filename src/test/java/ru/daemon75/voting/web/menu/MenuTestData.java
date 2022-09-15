@@ -14,7 +14,7 @@ import static ru.daemon75.voting.web.restaurant.RestaurantTestData.*;
 
 public class MenuTestData {
     public static final MatcherFactory.Matcher<Menu> MENU_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Menu.class,
-            "restaurant.menuItems", "restaurant.votes");
+            "restaurant.menuItems", "restaurant.votes", "restaurant.menus");
 //    public static MatcherFactory.Matcher<Menu> MENU_WITH_DISHES_MATCHER =
 //            MatcherFactory.usingAssertions(Menu.class,
 //                    //     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes

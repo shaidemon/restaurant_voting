@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.daemon75.voting.error.DataConflictException;
 import ru.daemon75.voting.model.Vote;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,9 @@ public interface VoteRepository extends BaseRepository<Vote> {
 
     @Query("SELECT v FROM Vote v WHERE v.id = :id and v.user.id = :userId")
     Optional<Vote> getByUser(int id, int userId);
+
+    @Query("SELECT v FROM Vote v WHERE v.user.id = ?1 and v.date_vote = ?2")
+    Vote getExistToday(int userId, LocalDate today);
 
     @Query("SELECT v FROM Vote v WHERE v.user.id=?1")
     List<Vote> getAllByUser_Id(int userId);

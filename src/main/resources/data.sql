@@ -15,14 +15,14 @@ VALUES ('Astoria'),
        ('Prague');
 
 INSERT INTO MENU (DATE_MENU, RESTAURANT_ID)
-VALUES (CURRENT_DATE-1, 1),
+VALUES (CURRENT_DATE - 1, 1),
        (CURRENT_DATE, 1),
        (CURRENT_DATE, 2);
 
 INSERT INTO MENU_ITEM (NAME, PRICE, DATE_MENU, RESTAURANT_ID)
-VALUES ('Beef Stroganoff', 28, CURRENT_DATE-1, 1),
-       ('Caesar', 15, CURRENT_DATE-1, 1),
-       ('Espresso', 5, CURRENT_DATE-1, 1),
+VALUES ('Beef Stroganoff', 28, CURRENT_DATE - 1, 1),
+       ('Caesar', 15, CURRENT_DATE - 1, 1),
+       ('Espresso', 5, CURRENT_DATE - 1, 1),
        ('Tourin', 22, CURRENT_DATE, 1),
        ('Caesar', 15, CURRENT_DATE, 1),
        ('Espresso', 5, CURRENT_DATE, 1),
@@ -34,6 +34,6 @@ VALUES ('Beef Stroganoff', 28, CURRENT_DATE-1, 1),
        ('San Pellegrino 750ml', 8, CURRENT_DATE, 3);
 
 INSERT INTO VOTE (DATE_VOTE, RESTAURANT_ID, USER_ID)
-VALUES  (CURRENT_DATE-1, 1, 1),
-        (CURRENT_DATE, 1, 1),
-        (CURRENT_DATE, 2, 2)
+VALUES (CURRENT_DATE - 1, 1, 1),
+       (CURRENT_DATE, 1, 1);
+--         (CURRENT_DATE, 2, 2)

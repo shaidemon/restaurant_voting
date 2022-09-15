@@ -38,10 +38,10 @@ public class RestaurantController {
         return ResponseEntity.of(repository.findById(id));
     }
 
-    @GetMapping("/{id}/with-dishes")
+    @GetMapping("/{id}/with-items")
     public ResponseEntity<Restaurant> getWithDishes(@PathVariable int id) {
         log.info("getWithDishes {}", id);
-        return ResponseEntity.of(repository.getWithDishes(id));
+        return ResponseEntity.of(repository.getWithMenuItems(id));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -11,13 +11,13 @@ import ru.daemon75.voting.repository.VoteRepository;
 import ru.daemon75.voting.util.VoteUtil;
 import ru.daemon75.voting.web.AbstractControllerTest;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.daemon75.voting.util.JsonUtil.writeValue;
-import static ru.daemon75.voting.web.user.UserTestData.USER_MAIL;
-import static ru.daemon75.voting.web.user.UserTestData.user;
+import static ru.daemon75.voting.web.user.UserTestData.*;
+import static ru.daemon75.voting.web.vote.VoteTestData.getNew;
+import static ru.daemon75.voting.web.vote.VoteTestData.getUpdated;
 import static ru.daemon75.voting.web.vote.VoteTestData.*;
 
 class VoteCommonControllerTest extends AbstractControllerTest {
@@ -34,11 +34,11 @@ class VoteCommonControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_MATCHER.contentJson(vote1_user_prague, vote_user_astoria));
+                .andExpect(VOTE_MATCHER.contentJson(vote1_user_astoria, vote_user_astoria));
     }
 
     @Test
-    @WithUserDetails(value = USER_MAIL)
+    @WithUserDetails(value = ADMIN_MAIL)
     void createNewDateWithLocation() throws Exception {
         Vote newVote = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
@@ -56,26 +56,36 @@ class VoteCommonControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = USER_MAIL)
-    void createSameDateWithLocation() throws Exception {
-        Vote newVote = getNewDateSame();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+    void createAgain() throws Exception {
+        Vote newVote = getNew();
+        perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(newVote)))
-                .andExpect(status().isCreated());
-        Vote created = VOTE_MATCHER.readFromJson(action);
-        int oldId = VOTE_ID_USER;
-        newVote.setId(oldId);
-        created.setUser(user);
-        newVote.setUser(user);
-        //Updating Vote or refuse - change CHECK_TIME in VoteUtil.class for various scenarios
-        if (VoteUtil.isTimeForVote()) {
-            VOTE_MATCHER.assertMatch(created, newVote);
-            VOTE_MATCHER.assertMatch(repository.getExisted(oldId), newVote);
-        } else {
-            VOTE_MATCHER.assertMatch(created, vote_user_astoria);
-            VOTE_MATCHER.assertMatch(repository.getExisted(oldId), vote_user_astoria);
-        }
+                .andExpect(status().isUnprocessableEntity());
     }
+
+//    @Test
+//    @WithUserDetails(value = USER_MAIL)
+//    void createSameDateWithLocation() throws Exception {
+//        Vote newVote = getNew();
+//        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(writeValue(newVote)))
+//                .andExpect(status().isCreated());
+//        Vote created = VOTE_MATCHER.readFromJson(action);
+//        int oldId = VOTE_ID_USER;
+//        newVote.setId(oldId);
+//        created.setUser(user);
+//        newVote.setUser(user);
+//        //Updating Vote or refuse - change CHECK_TIME in VoteUtil.class for various scenarios
+//        if (VoteUtil.isTimeForVote()) {
+//            VOTE_MATCHER.assertMatch(created, newVote);
+//            VOTE_MATCHER.assertMatch(repository.getExisted(oldId), newVote);
+//        } else {
+//            VOTE_MATCHER.assertMatch(created, vote_user_astoria);
+//            VOTE_MATCHER.assertMatch(repository.getExisted(oldId), vote_user_astoria);
+//        }
+//    }
 
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -87,15 +97,15 @@ class VoteCommonControllerTest extends AbstractControllerTest {
                 .content(writeValue(updated)))
                 .andDo(print())
                 // Vote updated or refused - change CHECK_TIME in VoteUtil.class for various scenarios
-                .andExpect(VoteUtil.isTimeForVote() ? status().isOk() : status().isForbidden());
+                .andExpect(VoteUtil.isTimeForVote() ? status().isOk() : status().isUnprocessableEntity());
     }
 
-    @Test
-    @WithUserDetails(value = USER_MAIL)
-    void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + VOTE1_ID_USER))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-        assertFalse(repository.findById(VOTE1_ID_USER).isPresent());
-    }
+//    @Test
+//    @WithUserDetails(value = USER_MAIL)
+//    void delete() throws Exception {
+//        perform(MockMvcRequestBuilders.delete(REST_URL + VOTE1_ID_USER))
+//                .andDo(print())
+//                .andExpect(status().isNoContent());
+//        assertFalse(repository.findById(VOTE1_ID_USER).isPresent());
+//    }
 }
