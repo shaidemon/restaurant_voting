@@ -24,7 +24,7 @@ public class Restaurant extends NamedEntity {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Schema(hidden = true)
-    private List<Dish> dishes;
+    private List<MenuItem> menuItems;
 
     @OneToMany(mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)

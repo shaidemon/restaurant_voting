@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "dish")
+@Table(name = "menu_item")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public class Dish extends NamedEntity {
+public class MenuItem extends NamedEntity {
 
     @Column(name = "price")
     private Integer price;
@@ -23,20 +24,17 @@ public class Dish extends NamedEntity {
     @JsonIgnore
     private Restaurant restaurant;
 
-    @ManyToOne
-    @JoinColumn(name = "date_menu")
-    @JsonIgnore
-    private Menu menu;
+    private LocalDate dateMenu;
 
-    public Dish(Integer id, String name, Integer price) {
+    public MenuItem(Integer id, String name, Integer price, LocalDate dateMenu) {
         super(id, name);
         this.price = price;
 //        this.restaurant = restaurant;
-//        this.menu = menu;
+        this.dateMenu = dateMenu;
     }
 
     @Override
     public String toString() {
-        return "Dish:" + id + '[' + name + ", price=" + price + ']';
+        return "MenuItem:" + id + '[' + name + ", price=" + price + ']';
     }
 }

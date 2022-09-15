@@ -1,4 +1,4 @@
-package ru.daemon75.voting.web.dish;
+package ru.daemon75.voting.web.menuItem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.daemon75.voting.model.Dish;
-import ru.daemon75.voting.repository.DishRepository;
+import ru.daemon75.voting.model.MenuItem;
+import ru.daemon75.voting.repository.MenuItemRepository;
 import ru.daemon75.voting.util.JsonUtil;
 import ru.daemon75.voting.web.AbstractControllerTest;
 
@@ -15,15 +15,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.daemon75.voting.web.dish.DishTestData.*;
+import static ru.daemon75.voting.web.menuItem.MenuItemTestData.*;
 import static ru.daemon75.voting.web.user.UserTestData.ADMIN_MAIL;
 
-class DishControllerTest extends AbstractControllerTest {
+class MenuItemControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = DishController.REST_URL + '/';
+    private static final String REST_URL = MenuItemController.REST_URL + '/';
 
     @Autowired
-    private DishRepository repository;
+    private MenuItemRepository repository;
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
@@ -32,52 +32,52 @@ class DishControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_MATCHER.contentJson(dishes));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(MENU_ITEMS));
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + DISH1_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + MENU_ITEM_1_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_MATCHER.contentJson(dish1));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(MENU_ITEM_1));
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void create() throws Exception {
-        Dish newDish = getNew();
+        MenuItem newMenuItem = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newDish)))
+                .content(JsonUtil.writeValue(newMenuItem)))
                 .andExpect(status().isCreated());
-        Dish created = DISH_MATCHER.readFromJson(action);
+        MenuItem created = MENU_ITEM_MATCHER.readFromJson(action);
         int newId = created.id();
-        newDish.setId(newId);
-        DISH_MATCHER.assertMatch(created, newDish);
-        DISH_MATCHER.assertMatch(repository.getExisted(newId), newDish);
+        newMenuItem.setId(newId);
+        MENU_ITEM_MATCHER.assertMatch(created, newMenuItem);
+        MENU_ITEM_MATCHER.assertMatch(repository.getExisted(newId), newMenuItem);
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        Dish updated = getUpdated();
+        MenuItem updated = getUpdated();
         updated.setId(null);
-        perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + MENU_ITEM_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        DISH_MATCHER.assertMatch(repository.getExisted(DISH1_ID), getUpdated());
+        MENU_ITEM_MATCHER.assertMatch(repository.getExisted(MENU_ITEM_1_ID), getUpdated());
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + DISH1_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL + MENU_ITEM_1_ID))
                 .andExpect(status().isNoContent());
-        assertFalse(repository.findById(DISH1_ID).isPresent());
+        assertFalse(repository.findById(MENU_ITEM_1_ID).isPresent());
     }
 }

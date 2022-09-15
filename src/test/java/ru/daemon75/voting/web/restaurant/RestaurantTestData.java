@@ -6,15 +6,15 @@ import ru.daemon75.voting.model.Restaurant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.daemon75.voting.web.dish.DishTestData.*;
+import static ru.daemon75.voting.web.menuItem.MenuItemTestData.*;
 
 public class RestaurantTestData {
-    public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class,  "dishes", "votes");
+    public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class,  "MENU_ITEMS", "votes");
     public static MatcherFactory.Matcher<Restaurant> RESTAURANT_WITH_DISHES_MATCHER =
             MatcherFactory.usingAssertions(Restaurant.class,
                     //     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes
                     (a, e) -> assertThat(a).usingRecursiveComparison()
-                            .ignoringFields( "dishes.restaurant", "menu").isEqualTo(e),
+                            .ignoringFields( "MENU_ITEMS.restaurant", "menu").isEqualTo(e),
                     (a, e) -> {
                         throw new UnsupportedOperationException();
                     });
@@ -29,9 +29,9 @@ public class RestaurantTestData {
     public static final Restaurant prague = new Restaurant(PRAGUE_ID, "Prague");
 
     static {
-        astoria.setDishes(List.of(dish1, dish2, dish3, dish4));
-        seasons.setDishes(List.of(dish5, dish6, dish7));
-        prague.setDishes(List.of(dish8, dish9, dish10));
+        astoria.setMenuItems(List.of(MENU_ITEM_1, MENU_ITEM_2, MENU_ITEM_3, MENU_ITEM_4));
+        seasons.setMenuItems(List.of(MENU_ITEM_5, MENU_ITEM_6, MENU_ITEM_7));
+        prague.setMenuItems(List.of(MENU_ITEM_8, MENU_ITEM_9, MENU_ITEM_10));
     }
 
     public static Restaurant getNew() {

@@ -12,5 +12,5 @@ public interface MenuRepository extends BaseRepository<Menu> {
 
     @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE m.id=?1")
-    Optional<Menu> getWithDishes(int id);
+    Optional<Menu> getWithItems(int id);
 }

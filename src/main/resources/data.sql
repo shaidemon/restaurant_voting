@@ -14,23 +14,26 @@ VALUES ('Astoria'),
        ('Four seasons'),
        ('Prague');
 
-INSERT INTO MENU (DATE_MENU)
-VALUES (CURRENT_DATE),
-       (CURRENT_DATE + 1);
+INSERT INTO MENU (DATE_MENU, RESTAURANT_ID)
+VALUES (CURRENT_DATE-1, 1),
+       (CURRENT_DATE, 1),
+       (CURRENT_DATE, 2);
 
-INSERT INTO DISH (NAME, PRICE, RESTAURANT_ID, DATE_MENU)
-VALUES ('Beef Stroganoff', 28, 1, 1),
-       ('Tourin', 22, 1, 1),
-       ('Caesar', 15, 1, 1),
-       ('Espresso', 5, 1, 1),
-       ('Eggs Benedict', 20, 2, 1),
-       ('Buttermilk pancake', 15, 2, 1),
-       ('Smoothie', 7, 2, 1),
-       ('Chicken schnitzel', 22, 3, 2),
-       ('Prague salad', 14, 3, 2),
-       ('San Pellegrino 750ml', 8, 3, 2);
+INSERT INTO MENU_ITEM (NAME, PRICE, DATE_MENU, RESTAURANT_ID)
+VALUES ('Beef Stroganoff', 28, CURRENT_DATE-1, 1),
+       ('Caesar', 15, CURRENT_DATE-1, 1),
+       ('Espresso', 5, CURRENT_DATE-1, 1),
+       ('Tourin', 22, CURRENT_DATE, 1),
+       ('Caesar', 15, CURRENT_DATE, 1),
+       ('Espresso', 5, CURRENT_DATE, 1),
+       ('Eggs Benedict', 20, CURRENT_DATE, 2),
+       ('Buttermilk pancake', 15, CURRENT_DATE, 2),
+       ('Smoothie', 7, CURRENT_DATE, 2),
+       ('Chicken schnitzel', 22, CURRENT_DATE, 3),
+       ('Prague salad', 14, CURRENT_DATE, 3),
+       ('San Pellegrino 750ml', 8, CURRENT_DATE, 3);
 
 INSERT INTO VOTE (DATE_VOTE, RESTAURANT_ID, USER_ID)
-VALUES  (CURRENT_DATE-1, 3, 1),
+VALUES  (CURRENT_DATE-1, 1, 1),
         (CURRENT_DATE, 1, 1),
         (CURRENT_DATE, 2, 2)

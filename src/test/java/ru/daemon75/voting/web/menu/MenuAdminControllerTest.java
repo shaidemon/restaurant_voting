@@ -44,20 +44,20 @@ class MenuAdminControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         Menu updated = getUpdated();
         updated.setId(null);
-        perform(MockMvcRequestBuilders.put(REST_URL + TOMORROW_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + TODAY_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        MENU_MATCHER.assertMatch(menuRepository.getExisted(TOMORROW_ID), getUpdated());
+        MENU_MATCHER.assertMatch(menuRepository.getExisted(TODAY_ID), getUpdated());
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + TOMORROW_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL + YESTERDAY_ID))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertFalse(menuRepository.findById(TOMORROW_ID).isPresent());
+        assertFalse(menuRepository.findById(YESTERDAY_ID).isPresent());
     }
 }

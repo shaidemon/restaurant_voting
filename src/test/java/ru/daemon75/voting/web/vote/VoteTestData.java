@@ -6,6 +6,7 @@ import ru.daemon75.voting.web.user.UserTestData;
 
 import java.time.LocalDate;
 
+import static ru.daemon75.voting.util.Util.TODAY;
 import static ru.daemon75.voting.web.restaurant.RestaurantTestData.*;
 
 public class VoteTestData {
@@ -13,7 +14,7 @@ public class VoteTestData {
     public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.
             usingIgnoringFieldsComparator(Vote.class, "user",
 //            usingIgnoringFieldsComparator(Vote.class, "user.password", "user.registered", "user.votes",
-                    "restaurant.dishes", "restaurant.votes");
+                    "restaurant.MENU_ITEMS", "restaurant.votes");
 
     public static final int VOTE1_ID_USER = 1;
     public static final int VOTE_ID_USER = 2;
@@ -33,8 +34,8 @@ public class VoteTestData {
         vote_admin_seasons.setUser(UserTestData.admin);
     }
 
-    public static Vote getNewDateNew() {
-        return new Vote(null, LocalDate.now().plusDays(1), prague);
+    public static Vote getNew() {
+        return new Vote(null, TODAY, prague);
     }
 
     public static Vote getNewDateSame() {

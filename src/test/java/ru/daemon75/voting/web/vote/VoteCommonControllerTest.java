@@ -40,7 +40,7 @@ class VoteCommonControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void createNewDateWithLocation() throws Exception {
-        Vote newVote = getNewDateNew();
+        Vote newVote = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(newVote)))

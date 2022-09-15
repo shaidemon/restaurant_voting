@@ -21,7 +21,7 @@ public class VoteService {
 
     @Transactional
     public Vote save(Vote vote, int userId) {
-        vote.setUser(userRepository.getExisted(userId));
+        vote.setUser(userRepository.getReferenceById(userId));
         Vote voteExist = getVoteExist(userId, vote.getDate_vote());
         if (isTimeForVote() && voteExist != null) {
             updateExist(vote, voteExist);
