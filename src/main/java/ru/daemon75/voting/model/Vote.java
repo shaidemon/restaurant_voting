@@ -23,10 +23,6 @@ public class Vote extends BaseEntity {
     @JsonIgnore
     private User user;
 
-//    @ManyToOne
-//    @JoinColumn(name = "restaurant_id")
-////    @JsonIgnore
-//    private Restaurant restaurant;
     private int restaurantId;
 
     public Vote(Integer id, LocalDate date_vote, int restaurantId) {

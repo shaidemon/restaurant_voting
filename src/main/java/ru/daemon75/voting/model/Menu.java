@@ -21,10 +21,6 @@ public class Menu extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-//    @OneToMany(mappedBy = "menu")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @Schema(hidden = true)
-//    private List<MenuItem> items;
 
     public Menu(Integer id, LocalDate date_menu, Restaurant restaurant) {
         super(id);

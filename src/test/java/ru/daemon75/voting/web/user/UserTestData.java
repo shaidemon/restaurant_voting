@@ -38,7 +38,6 @@ public class UserTestData {
 
     static {
         user.setVotes(List.of(vote1_user_astoria, vote_user_astoria));
-//        admin.setVotes(List.of(vote_admin_seasons));
     }
 
     public static User getNew() {

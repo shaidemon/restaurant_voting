@@ -24,17 +24,4 @@ public class VoteAdminController {
         log.info("getAll");
         return repository.findAll();
     }
-
-//    @GetMapping("{id}")
-//    public ResponseEntity<Vote> get(@PathVariable int id) {
-//        log.info("get vote id={}", id);
-//        return ResponseEntity.of(repository.findById(id));
-//    }
-//
-//    @DeleteMapping("{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void delete(@PathVariable int id) {
-//        log.info("delete id={}", id);
-//        repository.delete(id);
-//    }
 }

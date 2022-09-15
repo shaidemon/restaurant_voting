@@ -1,7 +1,6 @@
 package ru.daemon75.voting.service;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.daemon75.voting.model.Vote;
@@ -10,9 +9,9 @@ import ru.daemon75.voting.repository.VoteRepository;
 
 import static ru.daemon75.voting.util.Util.TODAY;
 import static ru.daemon75.voting.util.VoteUtil.isTimeForVote;
+import static ru.daemon75.voting.util.validation.ValidationUtil.assureIdConsistent;
 
 @Service
-@Slf4j
 @AllArgsConstructor
 public class VoteService {
     private final VoteRepository repository;
@@ -25,23 +24,11 @@ public class VoteService {
         return voteExist == null ? repository.save(vote) : null;
     }
 
-    public Vote update(Vote vote) {
+    public Vote update(Vote vote, int id, int userId) {
+        assureIdConsistent(vote, id);
+        repository.checkBelong(id, userId);
         if (isTimeForVote())
             return repository.save(vote);
         return null;
     }
-
-//    private void updateExist(Vote vote, Vote voteExist) {
-//        log.info("change voting, vote with id={}", vote.id());
-//        voteExist.setRestaurantId(vote.getRestaurantId());
-//        repository.save(voteExist);
-//    }
-
-//    private Vote getVoteExist(int userId, LocalDate dateVote) {
-//        return repository.getAllByUser_Id(userId).stream()
-//                .filter(v -> v.getDate_vote().equals(dateVote))
-//                .findAny().orElse(null);
-//    }
-
-
 }

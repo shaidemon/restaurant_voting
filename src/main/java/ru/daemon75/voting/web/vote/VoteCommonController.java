@@ -54,23 +54,9 @@ public class VoteCommonController {
     public ResponseEntity<HttpStatus> update(@AuthenticationPrincipal AuthUser authUser, @RequestBody Vote vote, @PathVariable int id) {
         int userId = authUser.id();
         log.info("update {} for user id={}", vote, userId);
-        assureIdConsistent(vote, id);
-        repository.checkBelong(id, userId);
-//        if (VoteUtil.isTimeForVote()) {
-//            repository.save(vote);
-//            return ResponseEntity.ok().build();
-//        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        return service.update(vote) != null ? ResponseEntity.ok().build()
+        return service.update(vote, id, userId) != null ? ResponseEntity.ok().build()
                 : ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
     }
 
-//    @DeleteMapping("{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void delete(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
-//        int userId = authUser.id();
-//        log.info("delete id={} for user id={}", id, userId);
-//        Vote vote = repository.checkBelong(id, userId);
-//        repository.delete(vote);
-//    }
 
 }

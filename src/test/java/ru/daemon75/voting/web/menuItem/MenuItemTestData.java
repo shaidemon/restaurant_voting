@@ -28,12 +28,7 @@ public class MenuItemTestData {
     public static final MenuItem MENU_ITEM_11 = new MenuItem(MENU_ITEM_1_ID + 10, "Prague salad", 14, TODAY);
     public static final MenuItem MENU_ITEM_12 = new MenuItem(MENU_ITEM_1_ID + 11, "San Pellegrino 750ml", 8, TODAY);
     public static final List<MenuItem> MENU_ITEMS_YESTERDAY = List.of(MENU_ITEM_1, MENU_ITEM_2, MENU_ITEM_3);
-    public static final List<MenuItem> MENU_ITEMS_TODAY = List.of(MENU_ITEM_4, MENU_ITEM_5, MENU_ITEM_6, MENU_ITEM_7, MENU_ITEM_8, MENU_ITEM_9, MENU_ITEM_10, MENU_ITEM_11, MENU_ITEM_12);
     public static final List<MenuItem> MENU_ITEMS = List.of(MENU_ITEM_1, MENU_ITEM_2, MENU_ITEM_3, MENU_ITEM_4, MENU_ITEM_5, MENU_ITEM_6, MENU_ITEM_7, MENU_ITEM_8, MENU_ITEM_9, MENU_ITEM_10, MENU_ITEM_11, MENU_ITEM_12);
-
-    static {
-
-    }
 
     public static MenuItem getNew() {
         return new MenuItem(null, "New MenuItem", 9, TODAY);

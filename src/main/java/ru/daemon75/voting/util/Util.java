@@ -6,5 +6,4 @@ public class Util {
 
     public static final LocalDate TODAY = LocalDate.now();
     public static final LocalDate YESTERDAY = LocalDate.now().minusDays(1);
-    public static final LocalDate TOMORROW = LocalDate.now().plusDays(1);
 }

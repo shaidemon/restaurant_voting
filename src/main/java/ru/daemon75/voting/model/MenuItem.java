@@ -29,7 +29,6 @@ public class MenuItem extends NamedEntity {
     public MenuItem(Integer id, String name, Integer price, LocalDate dateMenu) {
         super(id, name);
         this.price = price;
-//        this.restaurant = restaurant;
         this.dateMenu = dateMenu;
     }
 

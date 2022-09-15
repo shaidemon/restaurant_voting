@@ -68,7 +68,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
-    void getWithDishes() throws Exception {
+    void getWithMenuItems() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + SEASONS_ID + "/with-items"))
                 .andExpect(status().isOk())
                 .andDo(print())

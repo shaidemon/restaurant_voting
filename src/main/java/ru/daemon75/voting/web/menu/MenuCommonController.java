@@ -27,7 +27,6 @@ public class MenuCommonController {
     private final MenuService service;
 
     @GetMapping()
-//    @Cacheable
     public List<Menu> getAll() {
         log.info("getAll");
         return repository.findAll();
