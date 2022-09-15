@@ -31,6 +31,7 @@ public class MenuCommonController {
     private final MenuService service;
 
     @GetMapping()
+    @Cacheable
     public List<Menu> getTodayMenus() {
         log.info("get today menus");
         return repository.getToday(TODAY);
