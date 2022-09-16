@@ -19,7 +19,7 @@ public class MenuItem extends NamedEntity {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;

@@ -12,8 +12,7 @@ import static ru.daemon75.voting.web.restaurant.RestaurantTestData.PRAGUE_ID;
 public class VoteTestData {
 
     public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.
-            usingIgnoringFieldsComparator(Vote.class, "user",
-                    "restaurant.MENU_ITEMS", "restaurant.votes");
+            usingIgnoringFieldsComparator(Vote.class, "user");
 
     public static final int VOTE1_ID_USER = 1;
     public static final int VOTE_ID_USER = 2;

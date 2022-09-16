@@ -39,7 +39,7 @@ class VoteCommonControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
-    void createNewDateWithLocation() throws Exception {
+    void createNewWithLocation() throws Exception {
         Vote newVote = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +61,8 @@ class VoteCommonControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(newVote)))
-                .andExpect(status().isUnprocessableEntity());
+                // Vote updated or refused - change CHECK_TIME in VoteUtil.class for various scenarios
+                .andExpect(VoteUtil.isTimeForVote() ? status().isCreated() : status().isUnprocessableEntity());
     }
 
     @Test
@@ -75,5 +76,10 @@ class VoteCommonControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 // Vote updated or refused - change CHECK_TIME in VoteUtil.class for various scenarios
                 .andExpect(VoteUtil.isTimeForVote() ? status().isOk() : status().isUnprocessableEntity());
+        if (VoteUtil.isTimeForVote()) {
+        VOTE_MATCHER.assertMatch(repository.getExisted(VOTE_ID_USER), getUpdated());
+        } else {
+            VOTE_MATCHER.assertMatch(repository.getExisted(VOTE_ID_USER), vote_user_astoria);
+        }
     }
 }

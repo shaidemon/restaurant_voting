@@ -18,7 +18,7 @@ public class Vote extends BaseEntity {
     @Column(name = "date_vote", nullable = false)
     private LocalDate date_vote;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
